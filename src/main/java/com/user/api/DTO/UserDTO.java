@@ -16,9 +16,6 @@ public record UserDTO(
   @NotBlank
   String name,
 
-  @NotNull
-  int age,
-
   @Email
   String email,
 
@@ -30,6 +27,11 @@ public record UserDTO(
   @Size(min = 8, max = 16)
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")
   String password,
+
+  @NotNull
+  @Size(min = 8, max = 16)
+  @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")
+  String confirmPassword,
 
   @NotNull
   Level level
