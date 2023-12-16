@@ -28,9 +28,6 @@ public record UserDTO(
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")
   String password,
 
-  @NotNull
-  @Size(min = 8, max = 16)
-  @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")
   String confirmPassword,
 
   @NotNull

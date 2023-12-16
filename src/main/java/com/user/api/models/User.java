@@ -9,11 +9,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Table(name = "\"user\"")
 @NoArgsConstructor
 public class User {
   
@@ -22,6 +24,7 @@ public class User {
     this.email = req.email();
     this.birthDate = req.birthDate();
     this.password = req.password();
+    this.confirmPassword = req.confirmPassword();
     this.level = req.level().getDescription();
   }
 
@@ -40,6 +43,9 @@ public class User {
 
   @Column(length = 100, nullable = false)
   private String password;
+
+  @Column(length = 100, nullable = false)
+  private String confirmPassword;
 
   @Column(nullable = false)
   private String level;
