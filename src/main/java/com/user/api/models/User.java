@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +45,7 @@ public class User {
   @Column(length = 100, nullable = false)
   private String password;
 
+  @Transient
   @Column(length = 100, nullable = false)
   private String confirmPassword;
 
