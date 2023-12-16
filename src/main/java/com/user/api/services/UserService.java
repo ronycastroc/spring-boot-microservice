@@ -1,9 +1,13 @@
 package com.user.api.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.user.api.exception.UserNotFoundException;
 import com.user.api.models.User;
 import com.user.api.repository.UserRepository;
 
@@ -30,6 +34,18 @@ public class UserService {
     if (!password.equals(confirmPassword)) {
         throw new IllegalArgumentException("Passwords are not the same.");
     }
+  }
+
+  public List<User> getAll() {
+    return repository.findAll();
+  }
+
+  public Optional<User> getById(Long id) {
+    Optional<User> user = repository.findById(id);
+
+    if (!user.isPresent()) throw new UserNotFoundException(id);
+
+    return user;
   }
 
 

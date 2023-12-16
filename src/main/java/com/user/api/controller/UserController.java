@@ -1,14 +1,20 @@
 package com.user.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.user.api.DTO.UserDTO;
+import com.user.api.exception.UserNotFoundException;
 import com.user.api.models.User;
 import com.user.api.services.UserService;
 
@@ -31,4 +37,19 @@ public class UserController {
     }
   }
   
+  @GetMapping
+  public List<User> getAll() {
+    return service.getAll();
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<?> getById(@PathVariable Long id) {
+     try {
+        Optional<User> user = service.getById(id);
+        return ResponseEntity.ok(user);
+    } catch (UserNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+  }
+
 }
