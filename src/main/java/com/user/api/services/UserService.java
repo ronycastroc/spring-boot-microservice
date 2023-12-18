@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.user.api.DTO.UserDTO;
 import com.user.api.exception.UserNotFoundException;
 import com.user.api.models.User;
 import com.user.api.repository.UserRepository;
@@ -48,5 +51,20 @@ public class UserService {
     return user;
   }
 
+  public void update(Long id, UserDTO user) {
+    Optional<User> optionalPerson = repository.findById(id);
+
+    if (optionalPerson.isEmpty()) throw new UserNotFoundException(id);
+
+    optionalPerson.map(r -> {
+      r.setName(user.name());
+      r.setEmail(user.email());
+      r.setBirthDate(user.birthDate());
+      r.setLevel(user.level().getDescription());
+      r.setPassword(user.password());
+      return repository.save(r);
+    });
+    
+  }
 
 }
