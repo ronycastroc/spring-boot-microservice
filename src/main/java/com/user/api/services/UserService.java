@@ -52,11 +52,11 @@ public class UserService {
   }
 
   public void update(Long id, UserDTO user) {
-    Optional<User> optionalPerson = repository.findById(id);
+    Optional<User> optionalUser = repository.findById(id);
 
-    if (optionalPerson.isEmpty()) throw new UserNotFoundException(id);
+    if (optionalUser.isEmpty()) throw new UserNotFoundException(id);
 
-    optionalPerson.map(r -> {
+    optionalUser.map(r -> {
       r.setName(user.name());
       r.setEmail(user.email());
       r.setBirthDate(user.birthDate());
@@ -64,6 +64,14 @@ public class UserService {
       r.setPassword(user.password());
       return repository.save(r);
     });
+    
+  }
+
+  public void delete(Long id) {
+
+    if (!repository.existsById(id)) throw new UserNotFoundException(id);
+
+    repository.deleteById(id);
     
   }
 
