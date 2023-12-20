@@ -32,12 +32,8 @@ public class UserController {
 
   @PostMapping
   public ResponseEntity<String> create(@RequestBody @Valid UserDTO req) {
-    try {
-      service.create(new User(req));
-      return ResponseEntity.status(HttpStatus.CREATED).build();
-    } catch (IllegalArgumentException e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
+    service.create(new User(req));
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
   
   @GetMapping
@@ -47,33 +43,21 @@ public class UserController {
 
   @GetMapping("/{id}")
   public ResponseEntity<?> getById(@PathVariable Long id) {
-     try {
-        Optional<User> user = service.getById(id);
-        return ResponseEntity.ok(user);
-    } catch (UserNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    Optional<User> user = service.getById(id);
+    return ResponseEntity.ok(user);
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid UserDTO req) {
-    try {
-      service.update(id, req);
-      return ResponseEntity.ok("User updated successfully");
-    } catch (UserNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    service.update(id, req);
+    return ResponseEntity.ok("User updated successfully");
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(value = HttpStatus.NO_CONTENT)
   public ResponseEntity<String> delete(@PathVariable Long id) {    
-    try {
-      service.delete(id);
-      return ResponseEntity.ok("User deleted successfully");
-    } catch (UserNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
+    service.delete(id);
+    return ResponseEntity.ok("User deleted successfully");
   }
 
 }
